@@ -1,0 +1,1 @@
+le: exec rslsync --nodaemon --config {{resilio.config}}
