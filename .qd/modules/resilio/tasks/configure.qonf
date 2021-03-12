@@ -1,0 +1,15 @@
+#[ resilio.folders
+if: .null $$$.secret
+    le: qd_set_option $$$.secret $(rslsync --generate-secret 4)
+fi:
+
+if: .null $$$.secret.readonly
+    le: qd_set_option $$$.secret.readonly $(rslsync --get-ro-secret {{$$$.secret}})
+fi:
+#]
+
+lq: render-template --source resilio:sync.conf \
+        --output {{resilio.config}} \
+        {{!resilio|env_to_data_args}}
+
+le: cat {{resilio.config}}

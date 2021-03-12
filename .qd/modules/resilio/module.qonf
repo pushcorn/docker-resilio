@@ -1,1 +1,11 @@
-#? resilio.config: /etc/default/sync.conf
+#? resilio.config: /etc/resilio-sync.conf
+#? resilio.device.name: {{hostname}}
+#? resilio.port: 55555
+#? resilio.storage.path: /var/lib/resilio-sync
+
+#? resilio.folders: default
+
+#[ resilio.folders default
+#? $$$.secret:
+#? $$$.path: /data
+#]
