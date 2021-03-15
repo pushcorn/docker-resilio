@@ -1,4 +1,5 @@
-#? resilio.config: /etc/resilio-sync.conf
+#? resilio.etc: /etc/resilio-sync/
+#? resilio.config: {{resilio.etc}}/sync.conf
 #? resilio.device.name: {{hostname}}
 #? resilio.port: 55555
 #? resilio.storage.path: /var/lib/resilio-sync

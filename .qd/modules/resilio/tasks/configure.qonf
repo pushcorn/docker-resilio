@@ -1,10 +1,10 @@
 #[ resilio.folders
 if: .null $$$.secret
-    le: qd_set_option $$$.secret $(rslsync --generate-secret 4)
+    se: $$$.secret $(rslsync --generate-secret 4)
 fi:
 
-if: .null $$$.secret.readonly
-    le: qd_set_option $$$.secret.readonly $(rslsync --get-ro-secret {{$$$.secret}})
+if: [ -z "{{$$$.secret.readonly}}" ] && (rslsync --get-ro-secret {{$$$.secret}} &> /dev/null)
+    se: $$$.secret.readonly $(rslsync --get-ro-secret {{$$$.secret}})
 fi:
 #]
 

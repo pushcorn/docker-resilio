@@ -1,14 +1,16 @@
-FROM pushcorn/ubuntu:latest
+FROM pushcorn/ubuntu:20.04
 
 LABEL maintainer="joseph@pushcorn.com"
 
-RUN PACKAGE_URL=$(curl -# --progress-bar https://help.resilio.com/hc/en-us/articles/206178924-Installing-Sync-package-on-Linux | grep -oP "(https.*amd64.deb)") \
-    && curl -# "$PACKAGE_URL" -o /tmp/pkg.deb \
-    && apt install /tmp/pkg.deb \
-    && rm -rf /tmp/* /etc/resilio-sync
+ARG RESILIO_SYNC_VERSION=2.7.*
 
-COPY .qd /root/.qd
+RUN qd ubuntu:begin-apt-install \
+        --repo "http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free" \
+        --key "https://linux-packages.resilio.com/resilio-sync/key.asc" \
+    && apt-get -y install resilio-sync=$RESILIO_SYNC_VERSION \
+    && qd ubuntu:end-apt-install \
+    && rm -rf /etc/resilio-sync/*
 
-EXPOSE 8888 55555
+EXPOSE 55555
 
 CMD [":run-task", "--task", "init,resilio:start"]
