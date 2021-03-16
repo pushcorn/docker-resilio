@@ -26,3 +26,5 @@ fi:
 if: .true overwrite
     le: cp "{{.tmp}}" "{{resilio.config}}"
 fi:
+
+le: rm {{.tmp}}
