@@ -1,0 +1,16 @@
+#!/bin/bash
+
+describe_command ()
+{
+    echo "Reload Resilio Sync"
+}
+
+
+run_command ()
+{
+    local pid=$(pidof rslsync)
+
+    if [ -n "$pid" ]; then
+        kill -HUP $pid
+    fi
+}
