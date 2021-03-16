@@ -1,3 +1,5 @@
+op: overwrite bool "Whether to overwrite the existing config file."
+
 #[ resilio.folders
 if: .null $$$.secret
     se: $$$.secret $(rslsync --generate-secret 4)
@@ -8,8 +10,19 @@ if: [ -z "{{$$$.secret.readonly}}" ] && (rslsync --get-ro-secret {{$$$.secret}} 
 fi:
 #]
 
+hi:
+se: .tmp $(qd_mktemp)
+
 lq: render --source resilio:sync.conf \
-        --target {{resilio.config}} \
+        --target {{.tmp}} \
         {{!resilio|env_to_data_args}}
 
-le: cat {{resilio.config}}
+if: [ -f "{{resilio.config}}" ] && qd_diff "{{resilio.config}}" "{{.tmp}}"
+    if: ! {{overwrite}} && echo && qd_prompt "Do you want to update the configuration file?"
+        so: overwrite true
+    fi:
+fi:
+
+if: .true overwrite
+    le: cp "{{.tmp}}" "{{resilio.config}}"
+fi:

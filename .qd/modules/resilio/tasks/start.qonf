@@ -1,5 +1,2 @@
-if: [ ! -f "{{resilio.config}}" ]
-    rt: resilio:configure
-fi:
-
+rt: resilio:configure -overwrite true
 le: rslsync --nodaemon --config {{resilio.config}}

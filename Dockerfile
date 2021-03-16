@@ -9,8 +9,8 @@ RUN qd ubuntu:begin-apt-install \
         --key "https://linux-packages.resilio.com/resilio-sync/key.asc" \
     && apt-get -y install resilio-sync=$RESILIO_SYNC_VERSION \
     && qd ubuntu:end-apt-install \
-    && rm -rf /etc/resilio-sync/*
+    && rm -rf /etc/resilio-sync/* /home
 
-EXPOSE 55555
+EXPOSE 15555
 
 CMD [":run-task", "--task", "init,resilio:start"]
