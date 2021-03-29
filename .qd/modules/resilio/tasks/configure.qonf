@@ -2,16 +2,16 @@ op: overwrite bool "Whether to overwrite the existing config file."
 
 #[ resilio.folders
 if: .null $$$.secret
-    se: $$$.secret $(rslsync --generate-secret 4)
+    se: $$$.secret rslsync --generate-secret 4
 fi:
 
 if: [ -z "{{$$$.secret.readonly}}" ] && (rslsync --get-ro-secret {{$$$.secret}} &> /dev/null)
-    se: $$$.secret.readonly $(rslsync --get-ro-secret {{$$$.secret}})
+    se: $$$.secret.readonly rslsync --get-ro-secret {{$$$.secret}}
 fi:
 #]
 
 hi:
-se: .tmp $(qd_mktemp)
+se: .tmp qd_mktemp
 
 lq: render --source resilio:sync.conf \
         --target {{.tmp}} \

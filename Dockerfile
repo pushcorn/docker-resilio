@@ -13,4 +13,4 @@ RUN qd ubuntu:begin-apt-install \
 
 EXPOSE 15555
 
-CMD [":run-task", "--task", "init,resilio:start"]
+CMD [":run-task", "--task", "start,resilio:start"]
