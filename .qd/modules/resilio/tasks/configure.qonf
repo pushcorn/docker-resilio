@@ -13,7 +13,7 @@ fi:
 hi:
 se: .tmp qd_mktemp
 
-lq: render --source resilio:sync.conf \
+lq: :render --source resilio:sync.conf \
         --target {{.tmp}} \
         {{!resilio|env_to_data_args}}
 
